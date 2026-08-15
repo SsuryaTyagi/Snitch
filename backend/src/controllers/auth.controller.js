@@ -1,5 +1,7 @@
 import userModel from "../models/user.model.js";
 
+
+
 export const RegisterController = async (req, res) => {
   try {
     const { email, contact, password, fullname, role } = req.body;
