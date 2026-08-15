@@ -1,6 +1,6 @@
 import userModel from "../models/user.model.js";
 import config from "../config/config.js";
-import { generateVerificationToken } from "../utils/jwt.utils.js";
+import { generateVerificationToken, verifyVerificationToken } from "../utils/jwt.utils.js";
 import sendVerificationEmail from "../services/email.service.js";
 
 const sendTokenResponse = (user, res) => {
