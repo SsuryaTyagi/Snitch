@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     enum: ["buyer", "seller"],
     default: "buyer",
   },
+   verified: { type: Boolean, default: false },
 });
 
 const userModel = mongoose.model("user", userSchema);
