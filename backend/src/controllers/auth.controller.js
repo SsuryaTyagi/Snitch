@@ -1,9 +1,22 @@
 import userModel from "../models/user.model.js";
 import config from "../config/config.js";
+import { generateVerificationToken } from "../utils/jwt.utils.js";
+import sendVerificationEmail from "../services/email.service.js";
 
-const sendTokenResponse=(user, res)=>{
-    const Token = Jwt.sign({id:user._id}, config.JWT_TOKEN_SECRET,{} )
-}
+const sendTokenResponse = (user, res) => {
+  const Token = Jwt.sign({ id: user._id }, config.JWT_TOKEN_SECRET, {
+    expiresIn: "7d",
+  });
+  res.status(200).json({
+    Token,
+    user: {
+      email: user.email,
+      fullname: user.fullname,
+      contact: user.contact,
+      role: user.role,
+    },
+  });
+};
 
 export const RegisterController = async (req, res) => {
   try {
@@ -29,7 +42,7 @@ export const RegisterController = async (req, res) => {
   }
 };
 
-const VerifyEmailController = async (req, res) => {
+export const VerifyEmailController = async (req, res) => {
   try {
     const { token } = req.params;
     const decoded = verifyVerificationToken(token);
