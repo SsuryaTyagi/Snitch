@@ -5,7 +5,7 @@ import {RegisterController, VerifyEmailController} from "../controllers/auth.con
 const router = Router();
 
 router.post("/register", validateRegisterUser, RegisterController);
-router.get("/verify-email/:token",    VerifyEmailController);
+router.get("/verify-email",    VerifyEmailController);
 
 
 export default router

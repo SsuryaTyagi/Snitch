@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import config from "../config/config";
+import config from "../config/config.js";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendVerificationEmail = async (email, name, token) => {
-  const verifyURL = `${config.CLIENT_URL}/verify-email/${token}`;
+  const verifyURL = `${config.SERVER_URL}/auth/verify-email?token=${token}`;
 
   await transporter.sendMail({
     from: `"SNITCH" <${config.SMTP_USER}>`,

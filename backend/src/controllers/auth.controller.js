@@ -1,6 +1,10 @@
 import userModel from "../models/user.model.js";
+import Jwt from "jsonwebtoken";
 import config from "../config/config.js";
-import { generateVerificationToken, verifyVerificationToken } from "../utils/jwt.utils.js";
+import {
+  generateVerificationToken,
+  verifyVerificationToken,
+} from "../utils/jwt.utils.js";
 import sendVerificationEmail from "../services/email.service.js";
 
 const sendTokenResponse = (user, res) => {
@@ -22,16 +26,23 @@ export const RegisterController = async (req, res) => {
   try {
     const { email, contact, password, fullname, role } = req.body;
 
-    const exists = await UserModel.findOne({ $or: [{ email }, { contact }] });
+    const exists = await userModel.findOne({ $or: [{ email }, { contact }] });
     if (exists)
       return res
         .status(400)
-        .json({ message: "User with this email and contact alreat exists" });
+        .json({ message: "User with this email or contact already exists" });
 
-    await UserModel.create({ name, email, password, verified: false });
+    await userModel.create({
+      fullname,
+      email,
+      password,
+      contact,
+      role,
+      verified: false,
+    });
 
     const token = generateVerificationToken(email);
-    await sendVerificaticdonEmail(email, name, token);
+    await sendVerificationEmail(email, fullname, token);
 
     return res
       .status(201)
@@ -44,10 +55,10 @@ export const RegisterController = async (req, res) => {
 
 export const VerifyEmailController = async (req, res) => {
   try {
-    const { token } = req.params;
+    const { token } = req.query;
     const decoded = verifyVerificationToken(token);
 
-    const user = await UserModel.findOne({ email: decoded.email });
+    const user = await userModel.findOne({ email: decoded.email });
     if (!user) return res.status(400).json({ message: "Invalid link" });
     if (user.verified)
       return res.status(400).json({ message: "Already verified" });
