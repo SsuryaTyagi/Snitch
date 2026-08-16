@@ -7,12 +7,15 @@ import {
 } from "../utils/jwt.utils.js";
 import sendVerificationEmail from "../services/email.service.js";
 
-const sendTokenResponse = (user, res) => {
-  const Token = Jwt.sign({ id: user._id }, config.JWT_TOKEN_SECRET, {
+const sendTokenResponse = (user, res, message) => {
+  const token = Jwt.sign({ id: user._id }, config.JWT_TOKEN_SECRET, {
     expiresIn: "7d",
   });
+
+  res.cookie("token", token)
   res.status(200).json({
-    Token,
+    message,
+    success:true,
     user: {
       email: user.email,
       fullname: user.fullname,
