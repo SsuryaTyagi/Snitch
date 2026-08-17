@@ -6,10 +6,22 @@ const useAuth = () => {
   const dispatch = useDispatch();
   const { user, error, loading } = useSelector((state) => state.authReducer);
 
-  const handleRegister = async (fullname, email, password, contact, isSeller = false) => {
+  const handleRegister = async (
+    fullname,
+    email,
+    password,
+    contact,
+    isSeller = false
+  ) => {
     try {
       dispatch(setLoading(true));
-      const res = await Register(fullname, email, password,contact, isSeller);
+      const res = await Register(
+        fullname,
+        email,
+        password,
+        contact,
+        isSeller
+      );
       dispatch(setMessage(res.message));
     } catch (error) {
       dispatch(setError(error));
@@ -20,4 +32,5 @@ const useAuth = () => {
 
   return { handleRegister, user, loading, error };
 };
-// surya tyagi 
+
+export default useAuth;
