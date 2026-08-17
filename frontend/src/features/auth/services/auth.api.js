@@ -22,6 +22,9 @@ export const Register = async (
   });
   return res.data;
 };
+
+
+
 export const Login = async (email, name, password) => {
   const res = await api.post("/login", { email, name, password });
   return res.data;
