@@ -20,3 +20,4 @@ const useAuth = () => {
 
   return { handleRegister, user, loading, error };
 };
+// surya tyagi 
