@@ -32,11 +32,8 @@ export const validateRegisterUser = [
     .isMobilePhone("any")
     .withMessage("Please provide a valid mobile phone number"),
 
-  body("role")
-    .optional()
-    .trim()
-    .isIn(["buyer", "seller"])
-    .withMessage("Role must be either buyer or seller"),
+  body("isSeller")
+    .isBoolean().withMessage("isSeller must be a boolean value"),
 
   validateRequest,
 ];

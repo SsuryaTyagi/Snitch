@@ -12,10 +12,10 @@ const sendTokenResponse = (user, res, message) => {
     expiresIn: "7d",
   });
 
-  res.cookie("token", token)
+  res.cookie("token", token);
   res.status(200).json({
     message,
-    success:true,
+    success: true,
     user: {
       email: user.email,
       fullname: user.fullname,
@@ -27,7 +27,7 @@ const sendTokenResponse = (user, res, message) => {
 
 export const RegisterController = async (req, res) => {
   try {
-    const { email, contact, password, fullname, role } = req.body;
+    const { email, contact, password, fullname, isSeller } = req.body;
 
     const exists = await userModel.findOne({ $or: [{ email }, { contact }] });
     if (exists)
@@ -40,7 +40,7 @@ export const RegisterController = async (req, res) => {
       email,
       password,
       contact,
-      role,
+      role: isSeler ? "seller" : "buyer",
       verified: false,
     });
 
