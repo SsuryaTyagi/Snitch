@@ -76,3 +76,16 @@ export const VerifyEmailController = async (req, res) => {
     return res.status(400).json({ message: msg });
   }
 };
+
+export const loginController = async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await userModel.find({ email });
+  if (!user) {
+    return res.status(400).json({
+      message: "Email or Password invalid",
+    });
+  }
+
+  sendTokenResponse(user, res, "User Login successful");
+};

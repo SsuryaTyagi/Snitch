@@ -37,3 +37,17 @@ export const validateRegisterUser = [
 
   validateRequest,
 ];
+ 
+
+export const validateLogin = [
+   body("email")
+    .isEmail()
+    .withMessage("Please provide a valid email address")
+    .normalizeEmail(),
+
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters long")
+    .matches(/\d/)
+    .withMessage("Password must contain at least one number"),
+]
