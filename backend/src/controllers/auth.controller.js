@@ -40,7 +40,7 @@ export const RegisterController = async (req, res) => {
       email,
       password,
       contact,
-      role: isSeler ? "seller" : "buyer",
+      role: isSeller ? "seller" : "buyer",
       verified: false,
     });
 
@@ -78,14 +78,22 @@ export const VerifyEmailController = async (req, res) => {
 };
 
 export const loginController = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await userModel.find({ email });
-  if (!user) {
-    return res.status(400).json({
-      message: "Email or Password invalid",
-    });
+    const user = await userModel.findOne({ email }).select("+password");
+    if (!user) {
+      return res.status(400).json({ message: "Email or Password invalid" });
+    }
+
+    const isMatch = await userModel.camparPassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Email or Password invalid" });
+    }
+
+    sendTokenResponse(user, res, "User Login successful");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
   }
-
-  sendTokenResponse(user, res, "User Login successful");
 };
