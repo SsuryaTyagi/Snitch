@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   fullname: {
     type: String,
@@ -34,7 +35,7 @@ userSchema.pre("save", async function () {
   const hash = await bcrypt.hash(this.password, rounds);
   this.password = hash;
 });
-userSchema.method.camparPassword = async function (password) {
+userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 

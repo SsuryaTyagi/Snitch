@@ -86,7 +86,7 @@ export const loginController = async (req, res) => {
       return res.status(400).json({ message: "Email or Password invalid" });
     }
 
-    const isMatch = await userModel.camparPassword(password);
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: "Email or Password invalid" });
     }

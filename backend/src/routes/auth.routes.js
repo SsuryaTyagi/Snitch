@@ -13,6 +13,6 @@ const router = Router();
 
 router.post("/register", validateRegisterUser, RegisterController);
 router.get("/verify-email", VerifyEmailController);
-router.post("login", validateLogin, loginController);
+router.post("/login", validateLogin, loginController);
 
 export default router;
