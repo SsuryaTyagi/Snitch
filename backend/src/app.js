@@ -6,6 +6,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
+
 app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 import authRoute from "./routes/auth.routes.js";

@@ -8,6 +8,7 @@ const validateRequest = (req, res, next) => {
   next();
 };
 
+// RegisterValidation
 export const validateRegisterUser = [
   body("email")
     .isEmail()
@@ -38,7 +39,7 @@ export const validateRegisterUser = [
   validateRequest,
 ];
  
-
+// LoginValidation
 export const validateLogin = [
    body("email")
     .isEmail()
