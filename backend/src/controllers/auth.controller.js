@@ -7,6 +7,8 @@ import {
 } from "../utils/jwt.utils.js";
 import sendVerificationEmail from "../services/email.service.js";
 
+
+// Send responce and token 
 const sendTokenResponse = (user, res, message) => {
   const token = Jwt.sign({ id: user._id }, config.JWT_TOKEN_SECRET, {
     expiresIn: "7d",
@@ -25,6 +27,7 @@ const sendTokenResponse = (user, res, message) => {
   });
 };
 
+// RegisterController 
 export const RegisterController = async (req, res) => {
   try {
     const { email, contact, password, fullname, isSeller } = req.body;
@@ -56,6 +59,7 @@ export const RegisterController = async (req, res) => {
   }
 };
 
+// VerifyEmailController
 export const VerifyEmailController = async (req, res) => {
   try {
     const { token } = req.query;
@@ -77,6 +81,7 @@ export const VerifyEmailController = async (req, res) => {
   }
 };
 
+// LoginController
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
