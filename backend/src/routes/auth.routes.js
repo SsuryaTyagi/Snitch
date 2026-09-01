@@ -11,8 +11,11 @@ import {
 
 const router = Router();
 
+// register route
 router.post("/register", validateRegisterUser, RegisterController);
+// verify email route
 router.get("/verify-email", VerifyEmailController);
+// login route
 router.post("/login", validateLogin, loginController);
 
 export default router;
