@@ -10,10 +10,13 @@ import sendVerificationEmail from "../services/email.service.js";
 
 // Send responce and token 
 const sendTokenResponse = (user, res, message) => {
+  // jsonWebToken create
   const token = Jwt.sign({ id: user._id }, config.JWT_TOKEN_SECRET, {
     expiresIn: "7d",
   });
 
+
+  // Set cookie and send response
   res.cookie("token", token);
   res.status(200).json({
     message,
